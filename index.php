@@ -14,6 +14,7 @@
 
 <?php
 	require "server/conn.php";
+	 ini_set('memory_limit', '2000M');
 	$fechainicial = strtotime("-7 day"); // Siete días antes
 	$fechainicial = date("d/m/Y", $fechainicial);
 	$fechafinal = date("d/m/Y");
@@ -50,7 +51,7 @@
 		$result = $query->fetchAll();
 		$first = 1;
 		$counter = 0; //para contar cada registro
-		$max = 3; //3600 cantidad de lineas para contar, en este caso 3600 para cumplir una hora
+		$max = 3600; //3600 cantidad de lineas para contar, en este caso 3600 para cumplir una hora
 		$fecha = ""; //para controlar por fecha
 		$hora = 0; //para imprimir hora
 		$cant_segundos=0; //para saber la cantidad de registros por cada día
@@ -74,10 +75,10 @@
 			}
 			$counter++;
 			$cant_segundos++;
-			$sumMQ135 = $sumMQ135+round(((44.01*$lectura['MQ135'])/24.45),5);;
-			$sumMQ9 = $sumMQ9+round(((211.7*$lectura['MQ9'])/24.45),5);
-			$sumMQ2 = $sumMQ9+round(((44.1*$lectura['MQ2'])/24.45),5);
-			$sumMQ5 = $sumMQ9+round(((18.2*$lectura['MQ135'])/24.45),5);
+			$sumMQ135 = $sumMQ135+$lectura['MQ135'];//round(((44.01*$lectura['MQ135'])/24.45),5);;
+			$sumMQ9 = $sumMQ9+$lectura['MQ9'];//round(((211.7*$lectura['MQ9'])/24.45),5);
+			$sumMQ2 = $sumMQ9+$lectura['MQ2'];//round(((44.1*$lectura['MQ2'])/24.45),5);
+			$sumMQ5 = $sumMQ9+$lectura['MQ135'];//round(((18.2*$lectura['MQ135'])/24.45),5);
 
 //al llegar a cumplir la hora
 			if ($counter == $max) {
